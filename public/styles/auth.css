@@ -1,0 +1,136 @@
+.auth-container {
+    min-height: calc(100vh - 300px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 0;
+}
+
+.auth-form {
+    background: white;
+    padding: 3rem;
+    border-radius: 15px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    width: 100%;
+    max-width: 450px;
+    position: relative;
+    overflow: hidden;
+}
+
+.auth-form::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+}
+
+.auth-form h2 {
+    text-align: center;
+    color: var(--primary-color);
+    margin-bottom: 2rem;
+    font-size: 2rem;
+}
+
+.auth-form .form-group {
+    margin-bottom: 1.8rem;
+}
+
+.auth-form input[type="email"],
+.auth-form input[type="password"],
+.auth-form input[type="text"],
+.auth-form input[type="tel"],
+.auth-form input[type="date"] {
+    padding: 1rem;
+    border: 2px solid #e1e5eb;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s;
+}
+
+.auth-form input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.2);
+}
+
+.auth-form .btn {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.1rem;
+    margin-top: 0.5rem;
+    background: linear-gradient(135deg, var(--primary-color), #FF8C42);
+    border: none;
+}
+
+.auth-form .btn:hover {
+    background: linear-gradient(135deg, #E55A2B, #FF7B2B);
+    transform: translateY(-3px);
+}
+
+.auth-link {
+    text-align: center;
+    margin-top: 1.5rem;
+    color: #666;
+    font-size: 0.95rem;
+}
+
+.auth-link a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s;
+    position: relative;
+}
+
+.auth-link a::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: var(--primary-color);
+    transform-origin: bottom right;
+    transition: transform 0.3s ease-out;
+}
+
+.auth-link a:hover {
+    color: #E55A2B;
+}
+
+.auth-link a:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+.password-strength {
+    height: 4px;
+    background: #e1e5eb;
+    border-radius: 2px;
+    margin-top: 0.5rem;
+    overflow: hidden;
+}
+
+.strength-weak {
+    background: var(--danger-color);
+    width: 25%;
+    height: 100%;
+    transition: width 0.3s;
+}
+
+.strength-medium {
+    background: var(--warning-color);
+    width: 50%;
+    height: 100%;
+    transition: width 0.3s;
+}
+
+.strength-strong {
+    background: var(--success-color);
+    width: 100%;
+    height: 100%;
+    transition: width 0.3s;
+}

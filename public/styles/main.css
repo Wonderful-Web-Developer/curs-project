@@ -1,0 +1,1113 @@
+:root {
+    --primary-color: #FF6B35;
+    --secondary-color: #2A9D8F;
+    --text-color: #333;
+    --light-bg: #f8f9fa;
+    --border-color: #ddd;
+    --success-color: #28a745;
+    --warning-color: #ffc107;
+    --danger-color: #dc3545;
+    --shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+@font-face {
+    font-family: 'Geologica';
+    src: url('../assets/fonts/Geologica/Geologica-VariableFont_CRSV,SHRP,slnt,wght.woff2') format('woff2'),
+         url('../assets/fonts/Geologica/Geologica-VariableFont_CRSV,SHRP,slnt,wght.woff') format('woff'),
+         url('../assets/fonts/Geologica/Geologica-VariableFont_CRSV,SHRP,slnt,wght.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Manrope';
+    src: url('../assets/fonts/Manrope/Manrope-VariableFont_wght.woff2') format('woff2'),
+         url('../assets/fonts/Manrope/Manrope-VariableFont_wght.woff') format('woff'),
+         url('../assets/fonts/Manrope/Manrope-VariableFont_wght.ttf') format('truetype');
+    font-weight: 200 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Geologica', sans-serif;
+    color: var(--text-color);
+    line-height: 1.6;
+    background-color: var(--light-bg);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 600;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header */
+.header {
+    background: linear-gradient(135deg, var(--primary-color), #FF8C42, #FF6B35);
+    color: white;
+    padding: 0;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+}
+
+.header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--secondary-color), #FFD166, var(--secondary-color));
+    z-index: 1;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    position: relative;
+    z-index: 2;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.logo-container a{
+    text-decoration: none;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo-container:hover {
+    transform: translateY(-2px);
+}
+
+.logo-container:hover .logo-icon {
+    transform: scale(1.05);
+    border-color: var(--secondary-color);
+    box-shadow: 
+        0 6px 15px rgba(42, 157, 143, 0.4),
+        inset 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.logo-container:hover .logo-icon img {
+    filter: brightness(1.1);
+}
+
+.logo-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid white;
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 
+        0 4px 10px rgba(0, 0, 0, 0.2),
+        inset 0 0 15px rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+    margin-right: 1.5rem;
+}
+
+.logo-icon img {
+    width: 80%;
+    height: 80%;
+    object-fit: contain;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.logo-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.logo-title {
+    font-size: 1.6rem;
+    margin: 0;
+    line-height: 1.2;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+    font-weight: 700;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.logo-subtitle {
+    font-size: 0.8rem;
+    opacity: 0.9;
+    font-weight: 400;
+    margin: 0;
+    font-family: 'Geologica', sans-serif;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.logo-container {
+    animation: fadeInUp 0.5s ease-out;
+}
+
+/* Навигация */
+.nav-right {
+    display: flex;
+    align-items: center;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-item {
+    position: relative;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0);
+}
+
+.nav-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+}
+
+.nav-link:hover::before {
+    transform: translateX(0);
+}
+
+.nav-link:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.nav-link i {
+    font-size: 1.1rem;
+}
+
+.nav-link span {
+    font-family: 'Manrope', sans-serif;
+}
+
+/* Особые стили для CTA кнопок в меню */
+.nav-cta {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 0.5rem 1.5rem;
+}
+
+.nav-cta:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: white;
+}
+
+/* Мобильное меню */
+.mobile-menu-toggle {
+    display: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    z-index: 1001;
+    position: relative;
+}
+
+.mobile-menu-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 998;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.mobile-menu-overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+/* Анимация для активного пункта меню */
+.nav-link.active {
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Индикатор текущей страницы */
+.nav-item::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: white;
+    transform: translateX(-50%);
+    transition: width 0.3s ease;
+}
+
+.nav-item:hover::after {
+    width: 70%;
+}
+
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 0.8rem 2rem;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: 'Manrope', sans-serif;
+}
+
+.btn:hover {
+    background-color: #E55A2B;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+.btn-small {
+    padding: 0.4rem 1rem;
+    font-size: 0.9rem;
+}
+
+/* Forms */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    font-family: 'Geologica', sans-serif;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+}
+
+.error-message {
+    color: var(--danger-color);
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+    display: none;
+}
+
+/* Alerts */
+.alert {
+    padding: 1rem;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.alert.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.alert.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* Status badges */
+.status {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-Новая {
+    background-color: #d1ecf1;
+    color: #0c5460;
+}
+
+.status-Выполнена {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-Отменена {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.status-В\ обработке {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content {
+    background-color: white;
+    margin: 10% auto;
+    padding: 2rem;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.close {
+    position: absolute;
+    right: 1rem;
+    top: 0.5rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #666;
+    transition: color 0.3s;
+}
+
+.close:hover {
+    color: var(--primary-color);
+}
+
+
+
+/* Footer */
+.footer {
+    background: linear-gradient(135deg, #1a1f2e, #2c3e50);
+    color: #fff;
+    padding: 4rem 0 2rem;
+    margin-top: 4rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--primary-color));
+    z-index: 1;
+}
+
+.footer::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+}
+
+.container {
+    position: relative;
+    z-index: 2;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+
+.footer-section {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.footer-section h3 {
+    color: #fff;
+    font-size: 1.4rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    padding-bottom: 0.8rem;
+    font-weight: 700;
+}
+
+.footer-section h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    border-radius: 2px;
+}
+
+.footer-section p {
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 1rem;
+    line-height: 1.7;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.footer-section p:hover {
+    color: #fff;
+    transform: translateX(5px);
+}
+
+.footer-section p i {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    width: 24px;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+/* Стили для контактов с иконками */
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.contact-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 107, 53, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+}
+
+.contact-item:hover .contact-icon {
+    background: var(--primary-color);
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+}
+
+.contact-text {
+    flex: 1;
+}
+
+.contact-text strong {
+    display: block;
+    color: #fff;
+    margin-bottom: 0.2rem;
+    font-weight: 600;
+}
+
+.contact-text span {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+}
+
+/* Стили для графика работы */
+.opening-hours {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.hours-list {
+    list-style: none;
+    padding: 0;
+}
+
+.hours-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.hours-list li:last-child {
+    border-bottom: none;
+}
+
+.day {
+    font-weight: 500;
+}
+
+.time {
+    color: var(--primary-color);
+    font-weight: 600;
+    font-family: 'Manrope', sans-serif;
+}
+
+/* Стили для социальных ссылок */
+.social-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.social-link {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.5rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.social-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+}
+
+.social-link:hover::before {
+    opacity: 1;
+}
+
+.social-link i {
+    position: relative;
+    z-index: 2;
+}
+
+.social-link:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    border-color: transparent;
+}
+
+/* Особый стиль для VK с изображением */
+.social-link.vk {
+    background: rgba(76, 117, 163, 0.15);
+    border-color: rgba(76, 117, 163, 0.3);
+}
+
+.social-link.vk::before {
+    background: #4c75a3;
+}
+
+.social-link.vk img {
+    width: 28px;
+    height: 28px;
+    filter: brightness(0) invert(1);
+    position: relative;
+    z-index: 2;
+}
+
+/* Копирайт */
+.copyright {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.95rem;
+    margin-top: 2rem;
+    position: relative;
+}
+
+.copyright::before {
+    content: '©';
+    margin-right: 5px;
+}
+
+/* Анимация для подвала */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .footer {
+        padding: 3rem 0 1.5rem;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+    
+    .footer-section {
+        text-align: center;
+    }
+    
+    .footer-section h3::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    .footer-section p {
+        justify-content: center;
+    }
+    
+    .contact-item {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 0.8rem;
+    }
+    
+    .social-links {
+        justify-content: center;
+    }
+    
+    .hours-list li {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer {
+        padding: 2.5rem 0 1rem;
+    }
+    
+    .footer-section h3 {
+        font-size: 1.3rem;
+    }
+    
+    .social-link {
+        width: 45px;
+        height: 45px;
+        font-size: 1.3rem;
+    }
+    
+    .social-link.vk img {
+        width: 24px;
+        height: 24px;
+    }
+    
+    .copyright {
+        font-size: 0.85rem;
+    }
+}
+
+/* Эффект свечения для иконок */
+.footer-section i {
+    text-shadow: 0 2px 10px rgba(255, 107, 53, 0.4);
+}
+
+.footer-section p:hover i {
+    text-shadow: 0 2px 15px rgba(255, 107, 53, 0.6);
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+
+
+
+
+/* Responsive */
+@media (max-width: 768px) {
+    
+    .container {
+        padding: 0 15px;
+    }
+
+    .nav {
+        padding: 0.8rem 0;
+    }
+    
+    .nav-menu {
+        position: fixed;
+        top: 0;
+        right: -280px;
+        width: 280px;
+        height: 100%;
+        background: linear-gradient(135deg, var(--primary-color), #FF8C42);
+        flex-direction: column;
+        padding: 5rem 2rem 2rem;
+        transition: right 0.4s ease;
+        z-index: 999;
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+        gap: 0;
+        margin: 0;
+        overflow-y: auto;
+    }
+    
+    .nav-menu.active {
+        right: 0;
+        z-index: 1000;
+    }
+    
+    .nav-item {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+    
+    .nav-link {
+        padding: 1rem;
+        border-radius: 8px;
+        justify-content: flex-start;
+    }
+    
+    .mobile-menu-toggle {
+        display: block;
+    }
+    
+    .mobile-menu-overlay.active {
+        display: block;
+        z-index: 50;
+    }
+
+    body.menu-open {
+        overflow: hidden;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .logo-container {
+        gap: 0.8rem;
+    }
+    
+    .logo-title {
+        font-size: 1.2rem;
+    }
+    
+    .logo-subtitle {
+        font-size: 0.8rem;
+    }
+    
+    .logo-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 1.8rem;
+        border-width: 2px;
+    }
+}
+
+/* Дополнительные стили кнопок */
+.btn-primary {
+    background-color: var(--primary-color);
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+}
+
+.btn-primary:hover {
+    background-color: #E55A2B;
+}
+
+.btn-secondary:hover {
+    background-color: #238f7f;
+}
+
+
+
+/* Эффекты наведения для карточек */
+.service-card, .rule-card, .feature {
+    cursor: pointer;
+}
+
+/* Градиентные границы */
+.service-card::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: rgb(236, 156, 119);
+    /* linear-gradient(45deg, var(--primary-color), var(--secondary-color), var(--primary-color)) */
+    border-radius: 17px;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.service-card:hover::after {
+    opacity: 1;
+}
+
+/* Медиа запросы для очень маленьких экранов */
+@media (max-width: 360px) {
+    .hero-title {
+        font-size: 1.6rem;
+    }
+    
+    .hero-stats {
+        gap: 1rem;
+    }
+    
+    .stat {
+        min-width: 70px;
+    }
+    
+    .stat-number {
+        font-size: 1.5rem;
+    }
+
+    .logo-text {
+        max-width: 150px;
+    }
+    
+    .logo-title {
+        font-size: 1.1rem;
+    }
+    
+    .logo-subtitle {
+        font-size: 0.75rem;
+    }
+}
+
+
+
+
+
+@media (max-width: 320px) {
+    /* Компактная навигация для очень маленьких экранов */
+    .logo-container {
+        max-width: 180px;
+    }
+    
+    .logo-icon {
+        width: 38px;
+        height: 38px;
+        margin-right: 0.4rem;
+        border-width: 2px;
+    }
+    
+    .logo-title {
+        font-size: 0.95rem;
+        line-height: 1.1;
+    }
+    
+    .logo-subtitle {
+        font-size: 0.65rem;
+    }
+    
+    /* Мобильное меню */
+    .nav-menu {
+        width: 240px;
+        right: -240px;
+        padding: 3.5rem 1rem 1rem;
+    }
+    
+    .nav-link {
+        padding: 0.7rem;
+        font-size: 0.85rem;
+    }
+    
+    .nav-link i {
+        font-size: 0.9rem;
+        margin-right: 0.4rem;
+    }
+    
+    /* Контейнер для всего контента */
+    .container {
+        padding: 0 8px;
+    }
+    
+    /* Кнопки общего назначения */
+    .btn {
+        padding: 0.55rem 0.9rem;
+        font-size: 0.85rem;
+    }
+    
+    /* Заголовки */
+    h1 {
+        font-size: 1.5rem;
+    }
+    
+    h2 {
+        font-size: 1.3rem;
+    }
+    
+    /* Убираем сложные эффекты для производительности */
+    .service-card::after {
+        display: none;
+    }
+}
+
+
+
+
+
+/* Кастомный скроллбар */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, var(--primary-color), #FF8C42);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #E55A2B, #FF8C42);
+}

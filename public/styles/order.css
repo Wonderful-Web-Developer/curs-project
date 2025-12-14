@@ -1,0 +1,232 @@
+.order-container {
+    padding: 3rem 0;
+    min-height: calc(100vh - 300px);
+}
+
+.order-container h2 {
+    color: var(--primary-color);
+    margin-bottom: 2rem;
+    font-size: 2.2rem;
+    text-align: center;
+}
+
+/* Form sections */
+.form-section {
+    background: white;
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+    padding: 2.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.form-section h3 {
+    color: var(--secondary-color);
+    margin-bottom: 1.5rem;
+    font-size: 1.6rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+/* Tariffs grid */
+.tariffs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.tariff-card {
+    background: white;
+    border: 3px solid #e1e5eb;
+    border-radius: 12px;
+    padding: 1.8rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.tariff-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.tariff-card:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.tariff-card:hover::before {
+    transform: scaleX(1);
+}
+
+.tariff-card input[type="radio"] {
+    display: none;
+}
+
+.tariff-card input[type="radio"]:checked + label {
+    color: var(--primary-color);
+}
+
+.tariff-card input[type="radio"]:checked ~ * {
+    color: var(--primary-color);
+}
+
+.tariff-card input[type="radio"]:checked ~ .tariff-card {
+    border-color: var(--primary-color);
+    background-color: #fff9f7;
+}
+
+.tariff-card label {
+    display: block;
+    cursor: pointer;
+}
+
+.tariff-card h4 {
+    color: var(--text-color);
+    margin-bottom: 0.8rem;
+    font-size: 1.3rem;
+    transition: color 0.3s;
+}
+
+.tariff-card p {
+    color: #666;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    transition: color 0.3s;
+}
+
+.tariff-card .price {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin: 1.2rem 0;
+    transition: color 0.3s;
+}
+
+.tariff-card .notes {
+    font-size: 0.9rem;
+    color: #888;
+    font-style: italic;
+    margin-top: 0.8rem;
+    padding-top: 0.8rem;
+    border-top: 1px dashed #eee;
+}
+
+.tariff-card input[type="radio"]:checked + label h4,
+.tariff-card input[type="radio"]:checked + label .price {
+    color: var(--primary-color);
+}
+
+/* Form details */
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.form-row .form-group {
+    margin-bottom: 0;
+}
+
+.form-group input[type="number"],
+.form-group input[type="date"],
+.form-group input[type="time"],
+.form-group select {
+    padding: 1rem;
+    border: 2px solid #e1e5eb;
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: white;
+}
+
+.form-group input[type="number"]:focus,
+.form-group input[type="date"]:focus,
+.form-group input[type="time"]:focus,
+.form-group select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+}
+
+/* Price calculation */
+.price-calculation {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 15px;
+    padding: 2rem;
+    margin-top: 2rem;
+    box-shadow: var(--shadow);
+}
+
+.price-calculation h4 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    font-size: 1.4rem;
+    text-align: center;
+}
+
+.price-calculation .calculation-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px dashed #ddd;
+}
+
+.price-calculation .calculation-row:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.price-calculation .total {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 2px solid var(--primary-color);
+}
+
+/* Form actions */
+.form-actions {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+}
+
+.form-actions .btn {
+    min-width: 200px;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+    .tariffs-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .form-actions .btn {
+        width: 100%;
+        max-width: 300px;
+    }
+}

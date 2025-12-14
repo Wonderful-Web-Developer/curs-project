@@ -1,0 +1,55 @@
+# Включаем mod_rewrite
+RewriteEngine On
+
+# Устанавливаем базовый путь
+RewriteBase /
+
+# Если запрашивается не существующий файл или директория
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Перенаправляем все на index.php
+RewriteRule ^(.*)$ index.php [QSA,L]
+
+# Устанавливаем кодировку по умолчанию
+AddDefaultCharset UTF-8
+
+# Запрещаем доступ к папкам
+Options -Indexes
+
+# Защита от просмотра файлов .htaccess
+<Files ".ht*">
+    Require all denied
+</Files>
+
+# Запрещаем доступ к определенным файлам
+<FilesMatch "\.(sql|log|ini|bak|config|txt|md)$">
+    Require all denied
+</FilesMatch>
+
+# Дополнительные рекомендации (можно добавить):
+
+# Защита от hotlinking (если нужно)
+# RewriteCond %{HTTP_REFERER} !^$
+# RewriteCond %{HTTP_REFERER} !^http(s)?://(www\.)?ваш-сайт\.ru [NC]
+# RewriteRule \.(jpg|jpeg|png|gif)$ - [NC,F,L]
+
+# Блокировка ботов и сканеров (опционально)
+# SetEnvIfNoCase User-Agent "(badbot1|badbot2)" bad_bot
+# Deny from env=bad_bot
+
+# Сжатие (если mod_deflate включен)
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
+</IfModule>
+
+# Кэширование (если mod_expires включен)
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpg "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/gif "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType text/css "access plus 1 week"
+    ExpiresByType application/javascript "access plus 1 month"
+</IfModule>

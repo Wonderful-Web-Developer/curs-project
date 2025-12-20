@@ -34,6 +34,24 @@ document.addEventListener('DOMContentLoaded', function() {
         orderForm.addEventListener('submit', validateOrderForm);
     }
     
+    // Обработчик клика по карточке тарифа
+    document.querySelectorAll('.tariff-card').forEach(card => {
+        card.addEventListener('click', function(e) {
+            const radio = this.previousElementSibling;
+            if (radio && radio.type === 'radio') {
+                radio.checked = true;
+                // Запускаем событие change для радиокнопки
+                radio.dispatchEvent(new Event('change'));
+                
+                // Анимация выбора
+                this.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+            }
+        });
+    });
+    
     // Инициализация начального расчета
     updatePriceCalculation();
 });
@@ -91,10 +109,12 @@ function animatePriceChange(newPrice) {
     if (oldPrice !== newPrice) {
         totalPriceElement.style.color = '#28a745';
         totalPriceElement.style.transform = 'scale(1.1)';
+        totalPriceElement.style.fontWeight = 'bold';
         
         setTimeout(() => {
             totalPriceElement.style.color = '';
             totalPriceElement.style.transform = '';
+            totalPriceElement.style.fontWeight = '';
         }, 500);
     }
 }
@@ -103,25 +123,48 @@ function validateOrderForm(e) {
     let isValid = true;
     const errors = [];
     
+    // Сбрасываем предыдущие ошибки
+    document.querySelectorAll('.form-group').forEach(group => {
+        group.classList.remove('has-error');
+        const errorText = group.querySelector('.error-text');
+        if (errorText) errorText.remove();
+    });
+    
     // Проверка выбора тарифа
     const selectedTariff = document.querySelector('input[name="tariff_id"]:checked');
     if (!selectedTariff) {
         errors.push('Выберите тариф');
         isValid = false;
+        // Подсветка секции с тарифами
+        const tariffSection = document.querySelector('.form-section:first-child');
+        if (tariffSection) {
+            tariffSection.style.boxShadow = '0 0 0 3px rgba(220, 53, 69, 0.2)';
+            setTimeout(() => {
+                tariffSection.style.boxShadow = '';
+            }, 2000);
+        }
     }
     
     // Проверка количества людей
-    const peopleCount = parseInt(document.getElementById('people_count').value) || 0;
+    const peopleCountInput = document.getElementById('people_count');
+    const peopleCount = parseInt(peopleCountInput.value) || 0;
     if (peopleCount < 1 || peopleCount > 10) {
         errors.push('Количество человек должно быть от 1 до 10');
         isValid = false;
+        peopleCountInput.parentElement.classList.add('has-error');
+        peopleCountInput.parentElement.insertAdjacentHTML('beforeend', 
+            '<div class="error-text">Введите значение от 1 до 10</div>');
     }
     
     // Проверка количества детей
-    const childrenCount = parseInt(document.getElementById('children_under_3').value) || 0;
+    const childrenInput = document.getElementById('children_under_3');
+    const childrenCount = parseInt(childrenInput.value) || 0;
     if (childrenCount < 0 || childrenCount > 5) {
         errors.push('Количество детей до 3 лет должно быть от 0 до 5');
         isValid = false;
+        childrenInput.parentElement.classList.add('has-error');
+        childrenInput.parentElement.insertAdjacentHTML('beforeend', 
+            '<div class="error-text">Введите значение от 0 до 5</div>');
     }
     
     // Проверка даты
@@ -156,17 +199,13 @@ function validateOrderForm(e) {
     
     if (!isValid) {
         e.preventDefault();
-        
-        // Показываем ошибки
         showNotification(errors.join('<br>'), 'error');
         
         // Прокрутка к первой ошибке
-        if (errors.length > 0) {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        }
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
     }
 }
 
@@ -243,11 +282,6 @@ style.textContent = `
             transform: translateX(100%);
             opacity: 0;
         }
-    }
-    
-    .has-error {
-        border-color: #dc3545 !important;
-        box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1) !important;
     }
 `;
 document.head.appendChild(style);

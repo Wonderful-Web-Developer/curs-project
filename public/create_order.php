@@ -150,18 +150,24 @@ require_once 'includes/header.php';
                 <?php else: ?>
                     <div class="tariffs-grid">
                         <?php foreach($tariffs as $tariff): ?>
-                        <div class="tariff-card">
+                        <div class="tariff-item">
                             <input type="radio" name="tariff_id" value="<?php echo $tariff['id']; ?>" 
-                                   id="tariff_<?php echo $tariff['id']; ?>" required>
-                            <label for="tariff_<?php echo $tariff['id']; ?>">
-                                <h4><?php echo htmlspecialchars($tariff['category_name'] . ' - ' . $tariff['ticket_type']); ?></h4>
-                                <p class="time-info"><?php echo htmlspecialchars($tariff['time_slot']); ?></p>
-                                <p class="day-info"><?php echo htmlspecialchars($tariff['day_type']); ?></p>
-                                <p class="duration">Продолжительность: <?php echo $tariff['duration_hours']; ?> час.</p>
-                                <p class="price"><?php echo number_format($tariff['price_per_person'], 2); ?> руб./чел.</p>
-                                <?php if($tariff['notes']): ?>
-                                    <p class="notes"><?php echo htmlspecialchars($tariff['notes']); ?></p>
-                                <?php endif; ?>
+                                id="tariff_<?php echo $tariff['id']; ?>" class="tariff-radio" required>
+                            <label for="tariff_<?php echo $tariff['id']; ?>" class="tariff-card">
+                                <div class="tariff-card-content">
+                                    <h4><?php echo htmlspecialchars($tariff['category_name'] . ' - ' . $tariff['ticket_type']); ?></h4>
+                                    <div class="tariff-details">
+                                        <p class="time-info"><?php echo htmlspecialchars($tariff['time_slot']); ?></p>
+                                        <p class="day-info"><?php echo htmlspecialchars($tariff['day_type']); ?></p>
+                                        <p class="duration">⏱️ Продолжительность: <?php echo $tariff['duration_hours']; ?> час.</p>
+                                        <p class="price"><?php echo number_format($tariff['price_per_person'], 2); ?> руб./чел.</p>
+                                    </div>
+                                    <?php if($tariff['notes']): ?>
+                                        <div class="notes">
+                                            <strong>ℹ️ Примечание:</strong> <?php echo htmlspecialchars($tariff['notes']); ?>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
                             </label>
                         </div>
                         <?php endforeach; ?>

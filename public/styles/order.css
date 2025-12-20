@@ -31,21 +31,41 @@
 .tariffs-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    gap: 1.5rem;
+    gap: 1.8rem;
     margin-top: 1rem;
 }
 
+/* Tariff item container */
+.tariff-item {
+    position: relative;
+    margin-bottom: 0;
+}
+
+/* Hide radio button */
+.tariff-radio {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* Tariff card styling */
 .tariff-card {
     background: white;
     border: 3px solid #e1e5eb;
     border-radius: 12px;
     padding: 1.8rem;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    user-select: none;
 }
 
+/* Top border accent */
 .tariff-card::before {
     content: '';
     position: absolute;
@@ -56,38 +76,74 @@
     background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
     transform: scaleX(0);
     transition: transform 0.3s ease;
+    z-index: 1;
 }
 
 .tariff-card:hover {
     border-color: var(--primary-color);
     transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
 }
 
 .tariff-card:hover::before {
     transform: scaleX(1);
 }
 
-.tariff-card input[type="radio"] {
-    display: none;
-}
-
-.tariff-card input[type="radio"]:checked + label {
-    color: var(--primary-color);
-}
-
-.tariff-card input[type="radio"]:checked ~ * {
-    color: var(--primary-color);
-}
-
-.tariff-card input[type="radio"]:checked ~ .tariff-card {
+/* Selected tariff styling */
+.tariff-radio:checked + .tariff-card {
     border-color: var(--primary-color);
-    background-color: #fff9f7;
+    background: linear-gradient(135deg, rgba(255, 107, 53, 0.05), rgba(255, 107, 53, 0.02));
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(255, 107, 53, 0.15), 0 0 0 2px rgba(255, 107, 53, 0.3);
 }
 
-.tariff-card label {
-    display: block;
-    cursor: pointer;
+.tariff-radio:checked + .tariff-card::before {
+    transform: scaleX(1);
+}
+
+.tariff-radio:checked + .tariff-card h4 {
+    color: var(--primary-color);
+}
+
+.tariff-radio:checked + .tariff-card .price {
+    color: var(--primary-color);
+    transform: scale(1.05);
+}
+
+/* Checkmark for selected tariff */
+.tariff-radio:checked + .tariff-card::after {
+    content: '✓';
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 30px;
+    height: 30px;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);
+    z-index: 2;
+}
+
+/* Pulse animation for selection */
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(255, 107, 53, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(255, 107, 53, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 107, 53, 0); }
+}
+
+.tariff-radio:checked + .tariff-card {
+    animation: pulse 1s ease;
+}
+
+/* Tariff card content */
+.tariff-card-content {
+    flex: 1;
 }
 
 .tariff-card h4 {
@@ -95,35 +151,59 @@
     margin-bottom: 0.8rem;
     font-size: 1.3rem;
     transition: color 0.3s;
+    padding-right: 40px;
 }
 
-.tariff-card p {
+.tariff-details {
+    margin: 1rem 0;
+}
+
+.tariff-card .time-info,
+.tariff-card .day-info {
     color: #666;
-    margin-bottom: 0.5rem;
     font-size: 0.95rem;
-    transition: color 0.3s;
+    margin-bottom: 0.3rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.tariff-card .time-info::before {
+    content: '🕐';
+    font-size: 0.9rem;
+}
+
+.tariff-card .day-info::before {
+    content: '📅';
+    font-size: 0.9rem;
+}
+
+.tariff-card .duration {
+    color: var(--secondary-color);
+    font-weight: 600;
+    margin: 0.8rem 0;
+    font-size: 0.95rem;
 }
 
 .tariff-card .price {
     font-size: 1.8rem;
     font-weight: bold;
-    color: var(--primary-color);
+    color: #495057;
     margin: 1.2rem 0;
-    transition: color 0.3s;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .tariff-card .notes {
     font-size: 0.9rem;
-    color: #888;
+    color: #666;
     font-style: italic;
-    margin-top: 0.8rem;
-    padding-top: 0.8rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
     border-top: 1px dashed #eee;
-}
-
-.tariff-card input[type="radio"]:checked + label h4,
-.tariff-card input[type="radio"]:checked + label .price {
-    color: var(--primary-color);
+    background: rgba(0, 0, 0, 0.02);
+    padding: 0.8rem;
+    border-radius: 6px;
+    line-height: 1.5;
 }
 
 /* Form details */
@@ -138,15 +218,30 @@
     margin-bottom: 0;
 }
 
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--text-color);
+    font-size: 1rem;
+}
+
 .form-group input[type="number"],
 .form-group input[type="date"],
 .form-group input[type="time"],
 .form-group select {
+    width: 100%;
     padding: 1rem;
     border: 2px solid #e1e5eb;
     border-radius: 8px;
     font-size: 1rem;
     background-color: white;
+    font-family: 'Geologica', sans-serif;
+    transition: all 0.3s ease;
 }
 
 .form-group input[type="number"]:focus,
@@ -155,6 +250,15 @@
 .form-group select:focus {
     border-color: var(--primary-color);
     box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+    outline: none;
+}
+
+.form-text {
+    display: block;
+    margin-top: 0.5rem;
+    color: #666;
+    font-size: 0.85rem;
+    font-style: italic;
 }
 
 /* Price calculation */
@@ -171,14 +275,28 @@
     margin-bottom: 1.5rem;
     font-size: 1.4rem;
     text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.calc-icon {
+    font-size: 1.8rem;
+}
+
+.calculation-details {
+    padding: 0.5rem;
 }
 
 .price-calculation .calculation-row {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin-bottom: 1rem;
     padding-bottom: 0.8rem;
     border-bottom: 1px dashed #ddd;
+    font-size: 1.1rem;
 }
 
 .price-calculation .calculation-row:last-child {
@@ -188,7 +306,7 @@
 }
 
 .price-calculation .total {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     font-weight: bold;
     color: var(--primary-color);
     margin-top: 1rem;
@@ -196,12 +314,17 @@
     border-top: 2px solid var(--primary-color);
 }
 
+#totalPrice {
+    font-size: 1.6rem;
+    transition: all 0.3s ease;
+}
+
 /* Form actions */
 .form-actions {
     display: flex;
     gap: 1.5rem;
     justify-content: center;
-    margin-top: 2rem;
+    margin-top: 3rem;
     flex-wrap: wrap;
 }
 
@@ -209,24 +332,188 @@
     min-width: 200px;
     padding: 1rem 2rem;
     font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
 }
 
+.btn-icon {
+    font-size: 1.2rem;
+}
+
+/* Alerts */
+.alert {
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    animation: slideIn 0.3s ease;
+    border-left: 4px solid;
+}
+
+.alert.success {
+    background-color: #d4edda;
+    color: #155724;
+    border-left-color: #28a745;
+}
+
+.alert.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border-left-color: #dc3545;
+}
+
+.alert h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+}
+
+.alert-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.alert-actions .btn {
+    min-width: 180px;
+}
+
+/* No tariffs message */
+.no-tariffs {
+    text-align: center;
+    padding: 3rem;
+    background: #f8f9fa;
+    border-radius: 10px;
+    border: 2px dashed #dee2e6;
+}
+
+.no-tariffs p {
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    color: #666;
+}
+
+/* Validation errors */
+.form-group.has-error input,
+.form-group.has-error select,
+.form-group.has-error textarea {
+    border-color: var(--danger-color) !important;
+    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1) !important;
+}
+
+.form-group.has-error label {
+    color: var(--danger-color);
+}
+
+.error-text {
+    color: var(--danger-color);
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+    display: none;
+    font-weight: 500;
+}
+
+.form-group.has-error .error-text {
+    display: block;
+}
+
+/* Responsive */
 @media (max-width: 768px) {
+    .order-container {
+        padding: 1.5rem 0;
+    }
+    
+    .form-section {
+        padding: 1.5rem;
+    }
+    
     .tariffs-grid {
         grid-template-columns: 1fr;
+        gap: 1.2rem;
+    }
+    
+    .tariff-card {
+        padding: 1.4rem;
+    }
+    
+    .tariff-radio:checked + .tariff-card::after {
+        top: 10px;
+        right: 10px;
+        width: 25px;
+        height: 25px;
+        font-size: 1rem;
+    }
+    
+    .tariff-card h4 {
+        font-size: 1.2rem;
+        padding-right: 35px;
+    }
+    
+    .tariff-card .price {
+        font-size: 1.6rem;
     }
     
     .form-row {
         grid-template-columns: 1fr;
+        gap: 1rem;
     }
     
     .form-actions {
         flex-direction: column;
-        align-items: center;
+        align-items: stretch;
+        gap: 1rem;
     }
     
     .form-actions .btn {
         width: 100%;
-        max-width: 300px;
+        min-width: auto;
+    }
+    
+    .price-calculation {
+        padding: 1.5rem;
+    }
+    
+    .price-calculation .calculation-row {
+        font-size: 1rem;
+    }
+    
+    .price-calculation .total {
+        font-size: 1.2rem;
+    }
+    
+    #totalPrice {
+        font-size: 1.4rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .order-container h2 {
+        font-size: 1.8rem;
+    }
+    
+    .form-section h3 {
+        font-size: 1.4rem;
+    }
+    
+    .tariff-card {
+        padding: 1.2rem;
+    }
+    
+    .tariff-card h4 {
+        font-size: 1.1rem;
+    }
+    
+    .tariff-card .price {
+        font-size: 1.4rem;
+    }
+    
+    .alert-actions {
+        flex-direction: column;
+    }
+    
+    .alert-actions .btn {
+        width: 100%;
     }
 }

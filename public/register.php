@@ -89,7 +89,7 @@ require_once 'includes/header.php';
         <form method="POST" id="registerForm">
             <div class="form-group">
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required 
+                <input type="email" id="email" name="email" required placeholder="user@mail.com"
                        value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>">
                 <span class="error-message" id="email-error"></span>
             </div>
@@ -110,6 +110,7 @@ require_once 'includes/header.php';
                 <label for="full_name">ФИО:</label>
                 <input type="text" id="full_name" name="full_name" required 
                        pattern="[А-Яа-яЁё\s]+"
+                       placeholder="Иванов Иван Иванович"
                        value="<?php echo htmlspecialchars($_POST['full_name'] ?? ''); ?>">
                 <span class="error-message" id="full-name-error"></span>
             </div>

@@ -69,7 +69,7 @@ function setupRegisterFormValidation() {
         const phone = document.getElementById('phone');
         const phoneError = document.getElementById('phone-error');
         if (!validatePhone(phone.value)) {
-            showError(phoneError, 'Введите телефон в формате 8(XXX)XXX-XX-XX или +7(XXX)XXX-XX-XX');
+            showError(phoneError, 'Введите телефон в формате 8(XXX)XXX-XX-XX');
             isValid = false;
         } else {
             hideError(phoneError);
@@ -105,8 +105,6 @@ function setupRegisterFormValidation() {
         }
     });
 }
-
-
 
 function setupLoginFormValidation() {
     const form = document.getElementById('loginForm');
@@ -190,7 +188,7 @@ function validateRussianName(name) {
 }
 
 function validatePhone(phone) {
-    const re = /^(8|\+7)\(\d{3}\)\d{3}-\d{2}-\d{2}$/;
+    const re = /^8\(\d{3}\)\d{3}-\d{2}-\d{2}$/;
     return re.test(phone);
 }
 

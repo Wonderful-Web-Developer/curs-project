@@ -1,4 +1,4 @@
-// Скрипты для панели администратора
+
 document.addEventListener('DOMContentLoaded', function() {
     initAdminPage();
 });
@@ -17,10 +17,111 @@ function initAdminPage() {
     // Инициализация горизонтального скролла мышью
     initTableDragScroll();
     
+    // Инициализация сортировки таблицы
+    initAdminSorting();
+    
     // Запускаем автообновление
     startAutoRefresh();
 }
 
+// ============ СОРТИРОВКА ТАБЛИЦЫ ============
+let currentSort = {
+    column: null,
+    direction: 'asc'
+};
+
+function initAdminSorting() {
+    const sortButtons = document.querySelectorAll('.sort-btn');
+    if (sortButtons.length === 0) return;
+    
+    sortButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const sortType = this.getAttribute('data-sort');
+            
+            // Если нажимаем на тот же столбец, меняем направление
+            if (currentSort.column === sortType) {
+                currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+            } else {
+                currentSort.column = sortType;
+                currentSort.direction = 'asc';
+            }
+            
+            sortAdminTable(sortType, currentSort.direction);
+            
+            // Обновляем иконки
+            sortButtons.forEach(btn => {
+                const icon = btn.querySelector('i');
+                icon.className = 'fas fa-sort';
+                
+                if (btn.getAttribute('data-sort') === currentSort.column) {
+                    icon.className = currentSort.direction === 'asc' 
+                        ? 'fas fa-sort-up' 
+                        : 'fas fa-sort-down';
+                }
+            });
+        });
+    });
+}
+
+function sortAdminTable(sortType, direction) {
+    const rows = Array.from(document.querySelectorAll('.order-row'));
+    const tbody = document.querySelector('.orders-table tbody');
+    
+    rows.sort((a, b) => {
+        let aValue, bValue;
+        
+        switch(sortType) {
+            case 'id':
+                aValue = parseInt(a.getAttribute('data-id'));
+                bValue = parseInt(b.getAttribute('data-id'));
+                break;
+                
+            case 'user':
+                aValue = a.getAttribute('data-user').toLowerCase();
+                bValue = b.getAttribute('data-user').toLowerCase();
+                break;
+                
+            case 'service':
+                aValue = a.getAttribute('data-service').toLowerCase();
+                bValue = b.getAttribute('data-service').toLowerCase();
+                break;
+                
+            case 'created':
+                aValue = parseInt(a.getAttribute('data-created'));
+                bValue = parseInt(b.getAttribute('data-created'));
+                break;
+                
+            case 'visit':
+                aValue = parseInt(a.getAttribute('data-visit'));
+                bValue = parseInt(b.getAttribute('data-visit'));
+                break;
+                
+            case 'price':
+                aValue = parseFloat(a.getAttribute('data-price'));
+                bValue = parseFloat(b.getAttribute('data-price'));
+                break;
+                
+            default:
+                return 0;
+        }
+        
+        let comparison = 0;
+        if (typeof aValue === 'string') {
+            comparison = aValue.localeCompare(bValue);
+        } else {
+            comparison = aValue - bValue;
+        }
+        
+        return direction === 'asc' ? comparison : -comparison;
+    });
+    
+    // Перемещаем строки в новом порядке
+    rows.forEach(row => {
+        tbody.appendChild(row);
+    });
+}
+
+// ============ ОСТАЛЬНОЙ КОД ============
 function initTableDragScroll() {
     const tableContainer = document.querySelector('.admin-orders-table');
     if (!tableContainer) return;
@@ -111,37 +212,6 @@ function initTableDragScroll() {
     
     // Добавляем визуальный индикатор возможности перетаскивания
     tableContainer.style.cursor = 'grab';
-    
-    // Добавляем стили для визуальной обратной связи
-    const style = document.createElement('style');
-    style.textContent = `
-        .admin-orders-table {
-            scroll-behavior: smooth;
-        }
-        
-        .admin-orders-table:active {
-            cursor: grabbing;
-        }
-        
-        .admin-orders-table::-webkit-scrollbar {
-            height: 8px;
-        }
-        
-        .admin-orders-table::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 4px;
-        }
-        
-        .admin-orders-table::-webkit-scrollbar-thumb {
-            background: var(--primary-color);
-            border-radius: 4px;
-        }
-        
-        .admin-orders-table::-webkit-scrollbar-thumb:hover {
-            background: #E55A2B;
-        }
-    `;
-    document.head.appendChild(style);
 }
 
 function initStatusButtons() {
@@ -196,6 +266,14 @@ function initModal() {
         editForm.addEventListener('submit', function(e) {
             e.preventDefault();
             submitStatusChange();
+        });
+    }
+    
+    // Кнопка отмены в модальном окне
+    const closeModalBtn = document.querySelector('#editModal .close-modal');
+    if (closeModalBtn) {
+        closeModalBtn.addEventListener('click', function() {
+            document.getElementById('editModal').style.display = 'none';
         });
     }
 }
@@ -277,8 +355,8 @@ function submitStatusChange() {
             // Закрываем модальное окно
             document.getElementById('editModal').style.display = 'none';
             
-            // Обновляем строку в таблице
-            updateOrderRow(orderId, data.status_id, data.status_name);
+            // Обновляем строку в таблице без перезагрузки страницы
+            updateOrderRow(orderId, data.status_id, data.status_name, adminNotes);
             
         } else {
             showNotification('Ошибка: ' + data.error, 'error');
@@ -291,29 +369,80 @@ function submitStatusChange() {
     });
 }
 
-function updateOrderRow(orderId, statusId, statusName) {
+
+
+
+function updateStatistics(statusName, action) {
+    const statusStats = {
+        'Новая': '.summary-card:nth-child(2) h3',
+        'В обработке': null, // Добавьте карточку для этого статуса если нужно
+        'Выполнена': '.summary-card:nth-child(3) h3',
+        'Отменена': '.summary-card:nth-child(4) h3'
+    };
+    
+    const selector = statusStats[statusName];
+    if (!selector) return;
+    
+    const statElement = document.querySelector(selector);
+    if (statElement) {
+        let currentCount = parseInt(statElement.textContent);
+        
+        if (action === 'increment') {
+            // Увеличиваем счетчик текущего статуса
+            currentCount++;
+            statElement.textContent = currentCount;
+            
+            // Уменьшаем счетчик предыдущего статуса
+            const oldStatus = statElement.parentElement.parentElement.querySelector('.status-badge');
+            if (oldStatus && oldStatus.textContent !== statusName) {
+                const oldStatusName = oldStatus.textContent;
+                const oldSelector = statusStats[oldStatusName];
+                if (oldSelector) {
+                    const oldStatElement = document.querySelector(oldSelector);
+                    if (oldStatElement) {
+                        let oldCount = parseInt(oldStatElement.textContent);
+                        if (oldCount > 0) {
+                            oldCount--;
+                            oldStatElement.textContent = oldCount;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
+
+function updateOrderRow(orderId, statusId, statusName, adminNotes) {
     // Находим строку с заявкой
-    const row = document.querySelector(`tr[data-order-id="${orderId}"]`);
+    const row = document.querySelector(`tr[data-id="${orderId}"]`);
     if (!row) {
         console.error('Row not found for order:', orderId);
         return;
     }
     
-    // Обновляем статус
-    const statusCell = row.querySelector('.status');
+    // Обновляем статус в ячейке
+    const statusCell = row.querySelector('.status-badge');
     if (statusCell) {
         statusCell.textContent = statusName;
-        // Обновляем класс статуса - экранируем пробелы
-        const statusClass = statusName.replace(/\s+/g, '\\ ');
-        statusCell.className = `status status-${statusClass}`;
+        // Обновляем класс статуса
+        statusCell.className = `status-badge status-${statusName}`;
+        
+        // Обновляем data-атрибут строки
+        row.setAttribute('data-status', statusName);
     }
     
     // Обновляем кнопку
     const editBtn = row.querySelector('.btn-edit-status');
     if (editBtn) {
         editBtn.setAttribute('data-status-id', statusId);
-        editBtn.setAttribute('data-admin-notes', document.getElementById('admin_notes').value);
+        editBtn.setAttribute('data-admin-notes', adminNotes);
     }
+    
+    // Обновляем статистику на странице без перезагрузки
+    updateStatistics(statusName, 'increment');
     
     // Показываем анимацию обновления
     row.style.backgroundColor = '#e8f5e9';

@@ -31,13 +31,10 @@ if (!$status) {
     exit();
 }
 
-// Проверяем существование заявки
-$stmt = $pdo->prepare("SELECT id FROM orders WHERE id = ?");
+// Получаем текущий статус заявки для обновления статистики
+$stmt = $pdo->prepare("SELECT status_id FROM orders WHERE id = ?");
 $stmt->execute([$order_id]);
-if (!$stmt->fetch()) {
-    echo json_encode(['success' => false, 'error' => 'Заявка не найдена']);
-    exit();
-}
+$currentStatus = $stmt->fetch(PDO::FETCH_ASSOC);
 
 // Обновляем статус заявки
 $sql = "UPDATE orders SET status_id = ?, admin_notes = ?, updated_at = NOW() WHERE id = ?";
@@ -49,7 +46,8 @@ if ($stmt->execute([$status_id, $admin_notes, $order_id])) {
         'message' => 'Статус заявки обновлен',
         'order_id' => $order_id,
         'status_id' => $status_id,
-        'status_name' => $status['name']
+        'status_name' => $status['name'],
+        'previous_status_id' => $currentStatus['status_id'] ?? null
     ]);
 } else {
     echo json_encode(['success' => false, 'error' => 'Ошибка при обновлении статуса']);

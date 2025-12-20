@@ -511,10 +511,14 @@ function updateOrderStatus(orderId, newStatus) {
 function submitReview(orderId, rating, comment) {
     showLoading(true, 'Отправка отзыва...');
     
+    const formData = new FormData();
+    formData.append('order_id', orderId);
+    formData.append('rating', rating);
+    formData.append('comment', comment);
+    
     fetch('/api/submit_review.php', {
         method: 'POST',
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        body: `order_id=${orderId}&rating=${rating}&comment=${encodeURIComponent(comment)}`
+        body: formData
     })
     .then(response => {
         if (!response.ok) {

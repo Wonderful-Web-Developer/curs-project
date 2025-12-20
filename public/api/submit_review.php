@@ -1,5 +1,5 @@
 <?php
-session_start();
+// session_start();
 require_once '../config/database.php';
 
 header('Content-Type: application/json');
@@ -12,7 +12,7 @@ if (!isset($_SESSION['user_id'])) {
 
 // Получаем данные
 $order_id = $_POST['order_id'] ?? null;
-$rating = $_POST['rating'] ?? null;
+$rating = (int)($_POST['rating'] ?? 0);
 $comment = $_POST['comment'] ?? '';
 
 // Валидация

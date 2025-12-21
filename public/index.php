@@ -153,7 +153,7 @@ $rules = [
             </div>
             <div class="about-image">
                 <div class="image-placeholder">
-                    <span>🏊‍♀️ Аквапарк "Апельсин"</span>
+                    <!-- <span>🏊‍♀️ Аквапарк "Апельсин"</span> -->
                 </div>
             </div>
         </div>
@@ -221,6 +221,99 @@ $rules = [
         </div>
     </div>
 </section>
+
+
+
+
+<section id="what-to-take" class="what-to-take">
+    <div class="container">
+        <div class="what-to-take-header">
+            <h2 class="section-title">Что взять с собой</h2>
+            <p class="section-subtitle">Необходимые вещи для комфортного посещения аквапарка</p>
+        </div>
+        
+        <!-- Блок "Подготовьтесь к отдыху" -->
+        <div class="what-to-take-prepare">
+            <div class="prepare-content">
+                <div class="prepare-icon">
+                    <i class="fas fa-swimming-pool"></i>
+                </div>
+                <h3 class="prepare-title">Подготовьтесь к отдыху</h3>
+                <p class="prepare-description">Все необходимое для комфортного посещения аквапарка</p>
+            </div>
+        </div>
+        
+        <!-- Список вещей в grid -->
+        <div class="what-to-take-list">
+            <ul>
+                <li>
+                    <div class="item-icon">
+                        <i class="fas fa-female"></i>
+                        <i class="fas fa-male"></i>
+                    </div>
+                    <div class="item-content">
+                        <h3>Купальник / плавки</h3>
+                        <p>Купальные шорты или купальник для плавания</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="item-icon">
+                        <i class="fas fa-swimmer"></i>
+                    </div>
+                    <div class="item-content">
+                        <h3>Шапочка для плавания</h3>
+                        <p>Для представительниц прекрасного пола любого возраста (кроме детей до 3-х лет)</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="item-icon">
+                        <i class="fas fa-shoe-prints"></i>
+                    </div>
+                    <div class="item-content">
+                        <h3>Сменная обувь</h3>
+                        <p>Для бассейна - удобные тапочки или сланцы</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="item-icon">
+                        <i class="fas fa-soap"></i>
+                    </div>
+                    <div class="item-content">
+                        <h3>Средства гигиены</h3>
+                        <p>Мыло, шампунь, мочалка, полотенце</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="item-icon">
+                        <i class="fas fa-life-ring"></i>
+                    </div>
+                    <div class="item-content">
+                        <h3>Нарукавники, жилеты</h3>
+                        <p>Небольшие круги для плавания (строго без декоративного наполнителя)</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="item-icon">
+                        <i class="fas fa-smile-beam"></i>
+                    </div>
+                    <div class="item-content">
+                        <h3>Хорошее настроение</h3>
+                        <p>Самый важный элемент для отличного отдыха!</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="what-to-take-note">
+            <div class="alert info">
+                <i class="fas fa-info-circle"></i>
+                <strong>Важно:</strong> Пожалуйста, не приносите стеклянную посуду, колющие и режущие предметы.
+            </div>
+        </div>
+    </div>
+</section>
+
+
 
 
 <section class="bright-impressions">

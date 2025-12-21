@@ -12,7 +12,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     $phone = trim($_POST['phone'] ?? '');
     $birth_date = $_POST['birth_date'] ?? '';
     
-    // Валидация
+    //Валидация
     if(empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $errors[] = 'Введите корректный email';
     }

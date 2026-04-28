@@ -485,6 +485,8 @@
 .btn-lg {
     padding: 1rem 2rem;
     font-size: 1.1rem;
+    max-width: 500px;
+    text-align: center;
 }
 
 /* Модальное окно для отзывов */

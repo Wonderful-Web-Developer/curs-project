@@ -113,7 +113,7 @@ require_once 'includes/header.php';
 ?>
 
 <div class="container">
-    <h2>Создание заявки</h2>
+    <h2 style="margin: 20px 0px 20px 0px">Создание заявки</h2>
     
     <?php if($success): ?>
         <div class="alert success">

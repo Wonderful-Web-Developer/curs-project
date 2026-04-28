@@ -31,7 +31,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     // Обновленная проверка телефона (разрешаем и 8, и +7)
     if(empty($phone) || !preg_match('/^(8|\+7)\(\d{3}\)\d{3}-\d{2}-\d{2}$/', $phone)) {
-        $errors[] = 'Введите телефон в формате 8(XXX)XXX-XX-XX или +7(XXX)XXX-XX-XX';
+        $errors[] = 'Введите телефон в формате 8(XXX)XXX-XX-XX';
     }
     
     if(empty($birth_date)) {
@@ -119,7 +119,7 @@ require_once 'includes/header.php';
                 <label for="phone">Телефон:</label>
                 <input type="tel" id="phone" name="phone" required 
                        pattern="(8|\+7)\(\d{3}\)\d{3}-\d{2}-\d{2}"
-                       placeholder="8(XXX)XXX-XX-XX или +7(XXX)XXX-XX-XX"
+                       placeholder="8(XXX)XXX-XX-XX"
                        value="<?php echo htmlspecialchars($_POST['phone'] ?? ''); ?>">
                 <span class="error-message" id="phone-error"></span>
             </div>

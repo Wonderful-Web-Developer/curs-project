@@ -15,7 +15,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
 <div class="edit-profile-page"> 
     <div class="container">
         <div class="profile-edit">
-            <h1><i class="fas fa-user-edit"></i> Редактирование профиля</h1>
+            <h2><i class="fas fa-user-edit"></i> Редактирование профиля</h2>
             
             <div class="edit-form">
                 <form id="editProfileForm">

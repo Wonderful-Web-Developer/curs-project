@@ -82,6 +82,9 @@ require_once 'includes/header.php';
             <p class="auth-link">
                 Нет аккаунта? <a href="/register.php">Зарегистрироваться</a>
             </p>
+            <p class="auth-link">
+                <a href="/forgot_password.php">Забыли пароль?</a>
+            </p>
         </form>
     </div>
 </div>
